@@ -1,12 +1,8 @@
 import { 
   configureStore, 
   getDefaultMiddleware,
-  createAction,
-  createReducer,
+  createSlice,
 } from "@reduxjs/toolkit";
-
-const loginSuccess = createAction("LOGIN_SUCCESS");
-const loginFailed = createAction("LOGIN_FAILED");
 
 const middleware = [
   ...getDefaultMiddleware()
@@ -17,14 +13,21 @@ const authState = {
   error: "",
 };
 
-const authReducer = createReducer(authState, {
-  [loginSuccess]: (state, action) => {
-    state.token = action.payload;
+const authSlice = createSlice({
+  name: "auth",
+  initialState: authState,
+  reducers: {
+    loginSuccess: (state, action) => {
+      state.token = action.payload;
+    },
+    loginFailed: (state, action) => {
+      state.error = action.payload;
+    },
   },
-  [loginFailed]: (state, action) => {
-    state.error = action.payload;
-  },
-})
+});
+
+const { loginSuccess, loginFailed } = authSlice.actions;
+const authReducer = authSlice.reducer;
 
 const store = configureStore({
   reducer: {
