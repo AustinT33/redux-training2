@@ -2,11 +2,11 @@ import {
   configureStore, 
   getDefaultMiddleware,
   createAction,
+  createReducer,
 } from "@reduxjs/toolkit";
 
 const loginSuccess = createAction("LOGIN_SUCCESS");
-const fetchLinksRequest = createAction("FETCH_LINKS_REQUEST");
-const fetchLinksSUccess = createAction("FETCH_LINKS_SUCCESS");
+const loginFailed = createAction("LOGIN_FAILED");
 
 const middleware = [
   ...getDefaultMiddleware()
@@ -14,12 +14,17 @@ const middleware = [
 
 const authState = {
   token: "",
+  error: "",
 };
 
-function authReducer(state = authState, action) {
-  //code here
-  return state;
-}
+const authReducer = createReducer(authState, {
+  [loginSuccess]: (state, action) => {
+    state.token = action.payload;
+  },
+  [loginFailed]: (state, action) => {
+    state.error = action.payload;
+  },
+})
 
 const store = configureStore({
   reducer: {
