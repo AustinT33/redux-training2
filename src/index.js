@@ -1,7 +1,15 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { 
+  configureStore, 
+  getDefaultMiddleware,
+  createAction,
+} from "@reduxjs/toolkit";
+
+const loginSuccess = createAction("LOGIN_SUCCESS");
+const fetchLinksRequest = createAction("FETCH_LINKS_REQUEST");
+const fetchLinksSUccess = createAction("FETCH_LINKS_SUCCESS");
 
 const middleware = [
-
+  ...getDefaultMiddleware()
 ];
 
 const authState = {
